@@ -1,0 +1,14 @@
+{
+  "plotly": {
+    "host": "0.0.0.0",
+    "port": 8051,
+    "debug": true,
+    "title": "KBA - Dashboard",
+    "boxes": {
+      "name1": "1",
+      "name2": "2",
+      "name3": "3",
+      "name4": "4"
+    }
+  }
+}

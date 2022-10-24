@@ -1,0 +1,35 @@
+{
+  "plotly": {
+    "host": "0.0.0.0",
+    "port": 8051,
+    "debug": true,
+    "title": "KBA - Dashboard",
+    "boxes": {
+      "name1": "1",
+      "name2": "2",
+      "name3": "3",
+      "name4": "4"
+    }
+  },
+  "es": {
+    "host": "ernie",
+    "port": 9200,
+    "srv": {
+      "index": "srv-*",
+      "countQuery": "loglevel:ERROR OR WARN OR FATAL"
+    },
+    "gw": {
+    },
+    "fw": {
+    }
+  },
+  "nas": {
+    "host": "",
+    "port": "5000",
+    "user": "",
+    "passwd": "",
+    "storage": {
+      "limit_percentage": 90
+    }
+  }
+}
