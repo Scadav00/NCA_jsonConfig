@@ -1,6 +1,7 @@
-package org.example;
+package com.example.JsonConfig;
 
 
+import com.example.JsonConfig.Plotly;
 import com.google.gson.Gson;
 
 public class ConfigTester {
