@@ -18,8 +18,6 @@ public class JsonConfigApplication {
 		SpringApplication.run(JsonConfigApplication.class, args);
 		System.out.println("Welcome to Gson !");
 
-//		serializeConfigSimple();
-//		deserializeConfigNested();
 		editJson();
 	}
 //no exception implemented !
@@ -30,43 +28,14 @@ public class JsonConfigApplication {
 //		String pathToString = "$.plotly.boxes.name1";
 		String newJson = JsonPath.parse(json).set( "$.plotly.host", "test").jsonString();
 		Files.write(Paths.get(file), newJson.getBytes());
-		System.out.println(json);
+		System.out.println(newJson);
 	}
 
 //	private static readMessage() {
 //
 //	}
+
 //	define separate file, define all parameters as constants. call such a message from another project I want to adapt
 //	logic
 
-	private static void serializeConfigNested() {
-		Plotly configSimple = new Plotly(
-				"0.0.0.0",
-				8051,
-				true,
-				"KBA-Dashboard"
-		);
-
-		Boxes boxes = new Boxes("1","2","3","4");
-
-		// Gson gson = new Gson();
-		//simple code with Gson
-		String json = new Gson().toJson(boxes);
-	}
-
-	private static void deserializeConfigNested() throws Exception {
-
-//        json path from config to configSimple changed
-		String file = "/home/ds/IdeaProjects/ClassConfig/src/main/java/org/example/ConfigSimple.json";
-		String jsonConfig = readFileAsString(file);
-
-//        String jsonConfig = "{ 'plotly':{ 'host':'0.0.0.0', 'port':8051, 'debug':true, 'title':'KBA - Dashboard', 'boxes':{ 'name1':'1', 'name2':'2', 'name3':'3', 'name4':'4'}}}";
-		Config config = new Gson().fromJson(jsonConfig, Config.class);
-//at the moment it does create an object but doesnt read
-	}
-
-	public static String readFileAsString(String file) throws Exception
-	{
-		return new String(Files.readAllBytes(Paths.get(file)));
-	}
 }
