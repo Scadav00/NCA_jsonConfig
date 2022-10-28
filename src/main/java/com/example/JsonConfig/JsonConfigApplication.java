@@ -18,7 +18,7 @@ public class JsonConfigApplication {
 		SpringApplication.run(JsonConfigApplication.class, args);
 		System.out.println("Welcome to Gson !");
 
-//		editJson();
+		editJson();
 //		readJson();
 
 	}
@@ -33,25 +33,37 @@ public class JsonConfigApplication {
 		System.out.println(newJson);
 	}
 
-	@RequestMapping(value = "/foos", method = RequestMethod.GET)
-	@ResponseBody
-	public String getFoosBySimplePath() {
-		return "Get some Foos";
-	}
+//	@RequestMapping(value = "/foos", method = RequestMethod.GET)
+//	@ResponseBody
+//	public String getFoosBySimplePath() {
+//		return "Get some Foos";
+//	}
+//
+//	@GetMapping("/json")
+//	@ResponseStatus(value = HttpStatus.OK)
+//	public static void readJson() throws Exception {
+//		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/ConfigSimpleWithGson.json";
+//		String jsonConfig = readFileAsString(file);
+//		System.out.println(jsonConfig);
+//
+//	}
 
-	@GetMapping("/json")
-	@ResponseStatus(value = HttpStatus.OK)
-	public static void readJson() throws Exception {
-		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/ConfigSimpleWithGson.json";
-		String jsonConfig = readFileAsString(file);
-		System.out.println(jsonConfig);
-
-	}
 
 	public static String readFileAsString(String file) throws Exception
 	{
+
 		return new String(Files.readAllBytes(Paths.get(file)));
 	}
+
+//	public static String readFileAsString(String file) throws Exception
+//	{
+//		return new String(Files.readAllBytes(Paths.get(file)));
+//	}
+
+
+//	String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/ConfigSimpleWithGson.json";
+//	String jsonConfig = readFileAsString(file);
+//        System.out.println(jsonConfig);
 
 //	private static void deserializeConfigNested() throws Exception {
 ////        json path from config to configSimple changed
