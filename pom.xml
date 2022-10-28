@@ -61,6 +61,7 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
+<!--			change from 2.8.2 to 2.7-->
 			<version>2.8.2</version>
 		</dependency>
 		<dependency>

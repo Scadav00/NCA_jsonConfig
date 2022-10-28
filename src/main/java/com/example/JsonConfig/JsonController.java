@@ -25,8 +25,6 @@ public class JsonController {
         String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/ConfigSimpleWithGson.json";
         String jsonConfig = readFileAsString(file);
         return jsonConfig;
-
     }
-
 
 }
