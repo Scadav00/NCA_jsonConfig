@@ -1,11 +1,11 @@
 package com.example.JsonConfig;
 
-import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
-import lombok.SneakyThrows;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +18,9 @@ public class JsonConfigApplication {
 		SpringApplication.run(JsonConfigApplication.class, args);
 		System.out.println("Welcome to Gson !");
 
-		editJson();
+//		editJson();
+//		readJson();
+
 	}
 //no exception implemented !
 
@@ -31,9 +33,41 @@ public class JsonConfigApplication {
 		System.out.println(newJson);
 	}
 
-//	private static readMessage() {
-//
+	@RequestMapping(value = "/foos", method = RequestMethod.GET)
+	@ResponseBody
+	public String getFoosBySimplePath() {
+		return "Get some Foos";
+	}
+
+	@GetMapping("/json")
+	@ResponseStatus(value = HttpStatus.OK)
+	public static void readJson() throws Exception {
+		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/ConfigSimpleWithGson.json";
+		String jsonConfig = readFileAsString(file);
+		System.out.println(jsonConfig);
+
+	}
+
+	public static String readFileAsString(String file) throws Exception
+	{
+		return new String(Files.readAllBytes(Paths.get(file)));
+	}
+
+//	private static void deserializeConfigNested() throws Exception {
+////        json path from config to configSimple changed
+//		String file = "/home/ds/IdeaProjects/ClassConfig/src/main/java/org/example/ConfigSimple.json";
+//		String jsonConfig = readFileAsString(file);
+////        String jsonConfig = "{ 'plotly':{ 'host':'0.0.0.0', 'port':8051, 'debug':true, 'title':'KBA - Dashboard', 'boxes':{ 'name1':'1', 'name2':'2', 'name3':'3', 'name4':'4'}}}";
+//		Config config = new Gson().fromJson(jsonConfig, Config.class);
+////at the moment it does create an object but doesnt read
 //	}
+//	public static String readFileAsString(String file) throws Exception
+//	{
+//		return new String(Files.readAllBytes(Paths.get(file)));
+//	}
+//}
+
+
 
 //	define separate file, define all parameters as constants. call such a message from another project I want to adapt
 //	logic
