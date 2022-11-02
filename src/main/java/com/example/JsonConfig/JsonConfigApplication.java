@@ -29,7 +29,7 @@ public class JsonConfigApplication {
 
 //		editJson();
 //		readJson();
-		mapJson();
+//		mapJson();
 
 //		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 //		String json = new String(Files.readAllBytes(Paths.get(file)));
