@@ -37,15 +37,17 @@ public class JsonConfigApplication {
 		System.out.println(newJson);
 	}
 
-	public static Map<String, Object> mapJson() throws IOException {
+//	public static Map<String, Object> mapJson() throws IOException {
+	public static void mapJson() throws IOException {
 		String loc = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 		String jsonConfig = readFileAsString(loc);
-		//JSONObject jsonObject = new JSONObject();
-		@SuppressWarnings("unchecked")
+/*		the next annotation might be needed
+		@SuppressWarnings("unchecked")*/
 		Map<String,Object>map = new Gson().fromJson(jsonConfig,Map.class);
-//		System.out.println(map);
+		System.out.println(map);
 
-		return map;
+//		return map;
+//		return map;
 	}
 
 	public static String readFileAsString(String file) throws IOException
@@ -67,7 +69,7 @@ public class JsonConfigApplication {
 //	}
 //}
 
-//	define separate file, define all parameters as constants. call such a message from another project I want to adapt
+//	define separate file? repositar?, define all parameters as constants. call such a message from another project I want to adapt
 //	logic
 
 }

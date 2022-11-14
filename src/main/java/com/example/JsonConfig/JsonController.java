@@ -21,14 +21,16 @@ public class JsonController {
         return "Get some Foos";
     }
 
+//    HTTP response can't send an object
     @ResponseBody
     @RequestMapping(value = "/map", method = RequestMethod.GET)
     public String getMapJson() throws IOException {
 
-        Map<String, Object> newMapJson;
-        newMapJson = mapJson();
-
-        return newMapJson.toString();
+//        Map<String, Object> newMapJson;
+//        newMapJson = mapJson();
+//
+//        return newMapJson.toString();
+        return null;
     }
 
     @ResponseBody
