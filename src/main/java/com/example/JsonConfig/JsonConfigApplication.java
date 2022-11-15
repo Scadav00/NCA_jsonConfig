@@ -5,6 +5,7 @@ import com.jayway.jsonpath.JsonPath;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.util.SerializationUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,9 +19,17 @@ public class JsonConfigApplication {
 		SpringApplication.run(JsonConfigApplication.class, args);
 		System.out.println("Welcome to Gson !");
 
+		final byte[] toSerialize;
+
 //		editJson();
 //		readJson();
 		mapJson();
+		//justTry();
+		mapSerialization();
+		mapSerialization(SerializationUtils.serialize());
+
+
+
 
 //		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 //		String json = new String(Files.readAllBytes(Paths.get(file)));
@@ -36,19 +45,43 @@ public class JsonConfigApplication {
 		Files.write(Paths.get(file), newJson.getBytes());
 		System.out.println(newJson);
 	}
+	public static byte[] justTry() {
+		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
+
+		byte[] data = SerializationUtils.serialize(file);
+		return data;
+
+		//JustTry deserializedJustTry = SerializationUtils.deserialize(file.getBytes());
+
+	}
+
+	public static  void  mapSerialization(byte[] serialize)throws IOException{
+//		String loc = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/Config.json";
+//		String jsonConfig = readFileAsString(loc);
+//		Map<String,Object>map = new Gson().fromJson(jsonConfig,Map.class);
+		Map<String,Object> configMap = mapJson();
+		mapSerialization(SerializationUtils.serialize(configMap));
+		System.out.println(configMap);
+		//return configMap;
+	}
+
 
 //	public static Map<String, Object> mapJson() throws IOException {
-	public static void mapJson() throws IOException {
+	public static Map<String, Object> mapJson() throws IOException {
 		String loc = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 		String jsonConfig = readFileAsString(loc);
 /*		the next annotation might be needed
 		@SuppressWarnings("unchecked")*/
 		Map<String,Object>map = new Gson().fromJson(jsonConfig,Map.class);
-		System.out.println(map);
+		//System.out.println(map);
+		return map;
+
 
 //		return map;
 //		return map;
 	}
+
+
 
 	public static String readFileAsString(String file) throws IOException
 	{
