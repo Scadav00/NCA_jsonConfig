@@ -27,7 +27,10 @@ public class JsonConfigApplication {
 //		readJson();
 //		mapJson();
 //		mapSerialization();
+
+//		mapDeserialization() has an argument!
 //		mapDeserialization();
+
 		outputCompare();
 
 //		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
@@ -35,54 +38,24 @@ public class JsonConfigApplication {
 //		convertJsonIntoMap(json);
 	}
 
+	public static void outputCompare() throws IOException {
+		Map<String, Object> configMap = mapJson();
+		byte[] configMapSerialized = mapSerialization();
+		Object configMapDeserialized = mapDeserialization(configMapSerialized);
 
-	@NotNull
+		System.out.println(configMap.equals(configMapDeserialized));
+	}
+	public static Object mapDeserialization(byte[] configMap) throws IOException {
+		Object data = SerializationUtils.deserialize(configMap);
+		return data;
+	}
+
 	public static byte[] mapSerialization() throws IOException {
 		Map<String, Object> configMap = mapJson();
 		byte[] data = SerializationUtils.serialize(configMap);
-		System.out.println(data);
 		return data;
 	}
 
-	public static Object mapDeserialization() throws IOException {
-//		if (objectData == null) {
-//			throw new IllegalArgumentException("The byte[] must not be null");
-//		}
-		byte[] configMap = mapSerialization();
-		Object data = SerializationUtils.deserialize(configMap);
-		//System.out.println(data);
-		return data;
-	}
-
-	public static void outputCompare() throws IOException {
-		Map<String, Object> configMap = mapJson();
-		String one = SerializationUtils.serialize(configMap).toString();
-
-		byte[] configMap2 = mapSerialization();
-		String two = SerializationUtils.deserialize(configMap2).toString();
-
-		System.out.println(one.equals(two));
-
-
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//	public static Map<String, Object> mapJson() throws IOException {
 	public static Map<String, Object> mapJson() throws IOException {
 		String loc = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 		String jsonConfig = readFileAsString(loc);
