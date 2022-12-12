@@ -23,12 +23,16 @@ public class JsonConfigApplication {
 		SpringApplication.run(JsonConfigApplication.class, args);
 		System.out.println("Welcome to Gson !");
 
-//		editJson();
-//		readJson();
+		//String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
+		// JsonConfigApplication jsonConfigApplication = new JsonConfigApplication();
+//editJson();
+//		readFileAsString(String, file);
 //		mapJson();
 //		mapSerialization();
 //		mapDeserialization();
-		outputCompare();
+//		outputCompare();
+//		editJson();
+
 
 //		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 //		String json = new String(Files.readAllBytes(Paths.get(file)));
@@ -36,7 +40,7 @@ public class JsonConfigApplication {
 	}
 
 
-	@NotNull
+
 	public static byte[] mapSerialization() throws IOException {
 		Map<String, Object> configMap = mapJson();
 		byte[] data = SerializationUtils.serialize(configMap);
@@ -56,7 +60,7 @@ public class JsonConfigApplication {
 
 	public static void outputCompare() throws IOException {
 		Map<String, Object> configMap = mapJson();
-		String one = SerializationUtils.serialize(configMap).toString();
+		String one = (String) mapDeserialization().toString();
 
 		byte[] configMap2 = mapSerialization();
 		String two = SerializationUtils.deserialize(configMap2).toString();
@@ -67,23 +71,8 @@ public class JsonConfigApplication {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //	public static Map<String, Object> mapJson() throws IOException {
-	public static Map<String, Object> mapJson() throws IOException {
+	public static   Map<String, Object> mapJson() throws IOException {
 		String loc = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 		String jsonConfig = readFileAsString(loc);
 /*		the next annotation might be needed
@@ -98,13 +87,14 @@ public class JsonConfigApplication {
 		return new String(Files.readAllBytes(Paths.get(file)));
 	}
 
-	private static void editJson() throws IOException {
+	public static String editJson() throws IOException {
 		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 		String json = new String(Files.readAllBytes(Paths.get(file)));
 //		String pathToString = "$.plotly.boxes.name1";
 		String newJson = JsonPath.parse(json).set( "$.plotly.host", "test").jsonString();
 		Files.write(Paths.get(file), newJson.getBytes());
 		System.out.println(newJson);
+		return file;
 	}
 
 //	----------------------------------------------------------------
