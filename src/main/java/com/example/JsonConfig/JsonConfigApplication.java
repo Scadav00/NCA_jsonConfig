@@ -2,12 +2,10 @@ package com.example.JsonConfig;
 
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
-import com.sun.istack.NotNull;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.util.SerializationUtils;
-
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,12 +21,12 @@ public class JsonConfigApplication {
 		SpringApplication.run(JsonConfigApplication.class, args);
 		System.out.println("Welcome to Gson !");
 
-		//String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
+		String jsonConfig = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 		// JsonConfigApplication jsonConfigApplication = new JsonConfigApplication();
 //editJson();
 //		readFileAsString(String, file);
 //		mapJson();
-//		mapSerialization();
+		mapSerialization();
 //		mapDeserialization();
 //		outputCompare();
 //		editJson();

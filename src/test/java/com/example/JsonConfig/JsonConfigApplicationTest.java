@@ -3,10 +3,8 @@ package com.example.JsonConfig;
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.lang3.SerializationUtils;
-import org.assertj.core.api.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,27 +13,25 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+@SuppressWarnings("rawtypes")
 
 class JsonConfigApplicationTest {
 
 
-    public final String file1 = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/ConfigSimpleWithGson.json";
-
-
+    public final String jsonConfig = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/ConfigSimpleWithGson.json";
 
 
     @Test
     void mapSerialization() {
-        try{
-            JsonConfigApplication jsonConfigApplication = new JsonConfigApplication();
-            byte[] actualOutput = jsonConfigApplication.mapSerialization();
-            Map<String, Object> configMap = jsonConfigApplication.mapJson();
+        try {
+            byte[] actualOutput = JsonConfigApplication.mapSerialization();
+            Map<String, Object> configMap = JsonConfigApplication.mapJson();
             byte[] expectedOutput = SerializationUtils.serialize((Serializable) configMap);// tu som musel pridat serializable
 
-            assertArrayEquals(actualOutput,expectedOutput);
+            assertArrayEquals(actualOutput, expectedOutput);
 
         } catch (IOException e) {
-            System.out.println("Your file cant be serialize "+ e.getMessage());
+            System.out.println("Your file cant be serialize " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -43,41 +39,34 @@ class JsonConfigApplicationTest {
 
     @Test
     void mapDeserialization() {
-        try{
-            JsonConfigApplication jsonConfigApplication = new JsonConfigApplication();
-            Object actualOutput =jsonConfigApplication.mapDeserialization();
-            Object exceptedOutput = jsonConfigApplication.mapJson();
+        try {
+            Object actualOutput = JsonConfigApplication.mapDeserialization();
+            Object exceptedOutput = JsonConfigApplication.mapJson();
 
 
             assertEquals(exceptedOutput, actualOutput);
 
         } catch (IOException e) {
+            System.out.println("I cant deserialize the map" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
 
-
-
     @Test
     void mapJson() {
         try {
-            JsonConfigApplication jsonConfigApplication = new JsonConfigApplication();
 
-            Map actualOutput =  jsonConfigApplication.mapJson(); // z kade vedelo ktori file chcem porovnavat ?
-            String loc= "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/Config.json";
-            String jsonConfig = jsonConfigApplication.readFileAsString(loc); //tu som musel pridat jsonConfigapplication
+            Map actualOutput = JsonConfigApplication.mapJson(); // z kade vedelo ktori file chcem porovnavat ?
+            String loc = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/Config.json";
+            String jsonConfig = JsonConfigApplication.readFileAsString(loc); //tu som musel pridat jsonConfigapplication
             Map expectedOutput = new Gson().fromJson(jsonConfig, Map.class);
 
-           // new Gson().fromJson(jsonConfig, Map.class);
 
-//
-//            System.out.println(actualOutput);
-//            System.out.println(expectedOutput);
-            assertEquals(actualOutput,expectedOutput); // zly asserEquls ????
-           // assertTrue(actualOutput.equals(expectedOutput))
+            assertEquals(actualOutput, expectedOutput);
 
         } catch (Exception e) {
+            System.out.println("I cant do the map from current file" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -86,14 +75,14 @@ class JsonConfigApplicationTest {
     @Test
     void readFileAsString() {
         try {
-            JsonConfigApplication jsonConfigApplication= new JsonConfigApplication();
-            String actualOutput = jsonConfigApplication.readFileAsString(file1);
-            String expectedOutput = (Files.readString(Paths.get(file1)));
+            String actualOutput = JsonConfigApplication.readFileAsString(jsonConfig);
+            String expectedOutput = (Files.readString(Paths.get(jsonConfig)));
 
             assertEquals(expectedOutput, actualOutput);
 
 
         } catch (IOException e) {
+            System.out.println("I cant read that file as string" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -102,19 +91,32 @@ class JsonConfigApplicationTest {
     @Test
     void editJson() {
 
-        try{
-            JsonConfigApplication jsonConfigApplication = new JsonConfigApplication();
-            String json = new String(Files.readAllBytes(Paths.get(file1)));
-            String actualOutput = jsonConfigApplication.readFileAsString(file1);
-            String expectedOutput =  JsonPath.parse(json).set("$.plotly.host", "ffffff").jsonString();
+        try {
+            String json = new String(Files.readAllBytes(Paths.get(jsonConfig)));
+            String actualOutput = JsonConfigApplication.readFileAsString(jsonConfig);
+            String modifiedAttribute = "test";
+            String expectedOutput = JsonPath.parse(json).set("$.plotly.host", modifiedAttribute).jsonString();
+            //String readAttribute = na zaklade path  vytiahne z expectedOutput(plotly. host,modifiedAttribute) vytiahne z expectedoutput String , potom porovnat modfied a readatribute
+            String readAttribute = JsonPath.parse(expectedOutput).set("$.plotly.host",modifiedAttribute).jsonString();
+           String realOutput = JsonConfigApplication.readFileAsString(expectedOutput);
 
-            System.out.println(actualOutput);
-            System.out.println(expectedOutput);
 
-            assertNotEquals(actualOutput,expectedOutput);
+
+
+            if (!actualOutput.equals(expectedOutput)) {
+                System.out.println("File edited");
+
+            } else {
+                System.out.println("Your file are equals");
+
+            }
+            //assertEquals(realOutput,readAttribute);
+          assertEquals(expectedOutput,readAttribute);
 
         } catch (Exception e) {
+            System.out.println("Your file doesnt equals" + e.getMessage());
             throw new RuntimeException(e);
-        }
+       }
+
     }
 }
