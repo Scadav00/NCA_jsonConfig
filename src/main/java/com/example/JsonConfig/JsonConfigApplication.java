@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 
-
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 public class JsonConfigApplication {
 
@@ -22,22 +21,21 @@ public class JsonConfigApplication {
 		System.out.println("Welcome to Gson !");
 
 		String jsonConfig = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
-		// JsonConfigApplication jsonConfigApplication = new JsonConfigApplication();
-//editJson();
+//		JsonConfigApplication jsonConfigApplication = new JsonConfigApplication();
+
 //		readFileAsString(String, file);
 //		mapJson();
-		mapSerialization();
+//		mapSerialization();
 //		mapDeserialization();
 //		outputCompare();
 //		editJson();
 
+		readValue();
 
 //		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 //		String json = new String(Files.readAllBytes(Paths.get(file)));
 //		convertJsonIntoMap(json);
 	}
-
-
 
 	public static byte[] mapSerialization() throws IOException {
 		Map<String, Object> configMap = mapJson();
@@ -65,12 +63,11 @@ public class JsonConfigApplication {
 
 		System.out.println(one.equals(two));
 
-
 	}
 
 
 //	public static Map<String, Object> mapJson() throws IOException {
-	public static   Map<String, Object> mapJson() throws IOException {
+	public static  Map<String, Object> mapJson() throws IOException {
 		String loc = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/Config.json";
 		String jsonConfig = readFileAsString(loc);
 /*		the next annotation might be needed
@@ -95,18 +92,17 @@ public class JsonConfigApplication {
 		return file;
 	}
 
+	public static String readValue() throws IOException {
+		Map<String, Object> configMap = mapJson();
+		Object dataObject = JsonPath.parse(configMap).read("$.plotly.host");
+		String dataString = dataObject.toString();
+
+		System.out.println(dataString);
+		return dataString;
+	}
+
 //	----------------------------------------------------------------
 
-//	public static byte[] justTry() {
-//		String file = "/home/ds/IdeaProjects/JsonConfig/src/main/java/com/example/JsonConfig/Config.json";
-//
-//		byte[] data = SerializationUtils.serialize(file);
-//		return data;
-//
-//		//JustTry deserializedJustTry = SerializationUtils.deserialize(file.getBytes());
-//
-//	}
-//
 //	private static void deserializeConfigNested() throws Exception {
 ////        json path from config to configSimple changed
 //		String file = "/home/ds/IdeaProjects/ClassConfig/src/main/java/org/example/ConfigSimple.json";
@@ -114,10 +110,6 @@ public class JsonConfigApplication {
 ////        String jsonConfig = "{ 'plotly':{ 'host':'0.0.0.0', 'port':8051, 'debug':true, 'title':'KBA - Dashboard', 'boxes':{ 'name1':'1', 'name2':'2', 'name3':'3', 'name4':'4'}}}";
 //		Config config = new Gson().fromJson(jsonConfig, Config.class);
 ////at the moment it does create an object but doesnt read
-//	}
-//	public static String readFileAsString(String file) throws Exception
-//	{
-//		return new String(Files.readAllBytes(Paths.get(file)));
 //	}
 //}
 
