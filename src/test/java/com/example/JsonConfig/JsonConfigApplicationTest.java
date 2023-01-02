@@ -21,6 +21,7 @@ class JsonConfigApplicationTest {
     public final String configJson = "src/test/testResources/ConfigSimpleWithGson.json";
 
 
+
     @Test
     void mapSerialization() {
         System.out.println(configJson);
