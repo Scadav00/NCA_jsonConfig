@@ -6,6 +6,7 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -17,16 +18,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JsonConfigApplicationTest {
 
-
-    public final String jsonConfig = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/ConfigSimpleWithGson.json";
+    public final String configJson = "src/test/testResources/ConfigSimpleWithGson.json";
 
 
     @Test
     void mapSerialization() {
+        System.out.println(configJson);
         try {
             byte[] actualOutput = JsonConfigApplication.mapSerialization();
             Map<String, Object> configMap = JsonConfigApplication.mapJson();
-            byte[] expectedOutput = SerializationUtils.serialize((Serializable) configMap);// tu som musel pridat serializable
+            byte[] expectedOutput = SerializationUtils.serialize((Serializable) configMap);
 
             assertArrayEquals(actualOutput, expectedOutput);
 
@@ -35,7 +36,6 @@ class JsonConfigApplicationTest {
             throw new RuntimeException(e);
         }
     }
-
 
     @Test
     void mapDeserialization() {
@@ -52,14 +52,12 @@ class JsonConfigApplicationTest {
         }
     }
 
-
     @Test
     void mapJson() {
         try {
-
-            Map actualOutput = JsonConfigApplication.mapJson(); // z kade vedelo ktori file chcem porovnavat ?
+            Map actualOutput = JsonConfigApplication.mapJson();
             String loc = "/home/fo/IdeaProjects/NCA_jsonConfig/src/main/java/com/example/JsonConfig/Config.json";
-            String jsonConfig = JsonConfigApplication.readFileAsString(loc); //tu som musel pridat jsonConfigapplication
+            String jsonConfig = JsonConfigApplication.readFileAsString(loc);
             Map expectedOutput = new Gson().fromJson(jsonConfig, Map.class);
 
 
@@ -71,12 +69,11 @@ class JsonConfigApplicationTest {
         }
     }
 
-
     @Test
     void readFileAsString() {
         try {
-            String actualOutput = JsonConfigApplication.readFileAsString(jsonConfig);
-            String expectedOutput = (Files.readString(Paths.get(jsonConfig)));
+            String actualOutput = JsonConfigApplication.readFileAsString((configJson));
+            String expectedOutput = (Files.readString(Paths.get(configJson)));
 
             assertEquals(expectedOutput, actualOutput);
 
@@ -87,21 +84,12 @@ class JsonConfigApplicationTest {
         }
     }
 
-
     @Test
     void editJson() {
-
         try {
-            String json = new String(Files.readAllBytes(Paths.get(jsonConfig)));
-            String actualOutput = JsonConfigApplication.readFileAsString(jsonConfig);
-            String modifiedAttribute = "test";
-            String expectedOutput = JsonPath.parse(json).set("$.plotly.host", modifiedAttribute).jsonString();
-            //String readAttribute = na zaklade path  vytiahne z expectedOutput(plotly. host,modifiedAttribute) vytiahne z expectedoutput String , potom porovnat modfied a readatribute
-            String readAttribute = JsonPath.parse(expectedOutput).set("$.plotly.host",modifiedAttribute).jsonString();
-           String realOutput = JsonConfigApplication.readFileAsString(expectedOutput);
-
-
-
+            String json = new String(Files.readAllBytes(Paths.get(configJson)));
+            String actualOutput = JsonConfigApplication.readFileAsString(configJson);
+            String expectedOutput =  JsonPath.parse(json).set("$.plotly.host", "ffffff").jsonString();
 
             if (!actualOutput.equals(expectedOutput)) {
                 System.out.println("File edited");
@@ -110,13 +98,25 @@ class JsonConfigApplicationTest {
                 System.out.println("Your file are equals");
 
             }
-            //assertEquals(realOutput,readAttribute);
-          assertEquals(expectedOutput,readAttribute);
+
+            assertNotEquals(actualOutput,expectedOutput);
 
         } catch (Exception e) {
             System.out.println("Your file doesnt equals" + e.getMessage());
             throw new RuntimeException(e);
-       }
+        }
+    }
+    @Test
+    void readValue() throws IOException {
 
+        File configMap = new File("src/test/testResources/ConfigSimpleWithGson.json");
+
+        String modifiedAttribute = "test";
+
+        String expectedOutput = JsonPath.parse(configMap).set("$.plotly.host", modifiedAttribute).jsonString();
+        Object thisString = JsonPath.parse(expectedOutput).read("$.plotly.host");
+        String actualOutput = JsonConfigApplication.readValue();
+
+        assertEquals(thisString,actualOutput);
     }
 }
